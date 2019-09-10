@@ -1,0 +1,29 @@
+{
+  "name": "reason-neon-clock",
+  "namespace": true,
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "warnings": {
+    "error": "+5+8+11"
+  },
+  "bs-dependencies": [
+    "reason-react"
+  ],
+  "bsc-flags": [
+    "-bs-super-errors",
+    "-bs-g"
+  ],
+  "refmt": 3,
+  "reason": {
+    "react-jsx": 3
+  },
+  "package-specs": {
+    "module": "commonjs",
+    "in-source": true
+  },
+  "suffix": ".bs.js"
+}
