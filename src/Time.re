@@ -24,9 +24,18 @@ let second = GetNow.second;
 Js.log2(" second ", second);
 let display = GetNow.display;
 Js.log2(" display ", display);
+let getNow = () => {
+  let hour = GetNow.hour;
+  let minute = GetNow.minute;
+  let second = GetNow.second;
+  let display = GetNow.display;
 
+  (hour, minute, second, display);
+};
+let (hour, minute, second, display) = getNow();
 // let getReadoutConfig = (~hour, ~minute) => {
 let getReadoutConfig = () => {
+  let itIs = true;
   let hour = GetNow.hour;
   let minute = GetNow.minute;
   let lastMinuteMark = Js.Math.floor(minute /. 5.) * 5;
@@ -64,6 +73,7 @@ let getReadoutConfig = () => {
   let isOClock = isIsOClock;
   let hour = nearestHour12;
   let config: Types.readOutConfig = {
+    itIs,
     isExact,
     isAbout,
     isNearly,
@@ -81,13 +91,11 @@ let getReadoutConfig = () => {
   config;
 };
 let config = getReadoutConfig();
-Js.log2(" config ", config.isAbout);
-// let (config) = getReadoutConfig(~hour, ~minute);
 
-// Js.log2(" getReadoutConfig ", getReadoutConfig(~hour, ~minute));
-
+/* reads `config` and generates and array of values to be used. Feels redundant...
+ */
 let getHighlights = [|
-  true, // IT IS
+  config.itIs, // IT IS
   config.isAbout, // ABOUT
   config.isNearly, // NEARLY
   config.minute === 10, // TEN
@@ -117,14 +125,33 @@ let getHighlights = [|
   config.isEvening // EVENING
 |];
 
-Js.log2(" getHighlights ", getHighlights);
+// Js.log2(" getHighlights ", getHighlights);
 
-let timeReadout = () => {
+// let timeReadout = () => {
+//   let highlighted = getHighlights;
+//   Js.log2("highlighted", highlighted);
+//   Js.log2("phrases", Phrases.phrases);
+
+//   let timeText =
+//     Belt.(
+//       Phrases.(
+//         highlighted->Array.mapWithIndex((idx, h) =>
+//           h ? phrases->Array.get(idx) : None
+//         )
+//       )
+//     );
+
+//   Js.log2(" timeText ", timeText);
+// };
+// timeReadout();
+let timeReadout = {
   // let readOutConfig = config;
   let highlighted = getHighlights;
   Js.log2("highlighted", highlighted);
   Js.log2("phrases", Phrases.phrases);
 
+  let cleanup = arr =>
+    arr->Belt.Array.keepMap(x => x)->Js.Array.joinWith(" ", _);
   let timeText =
     Belt.(
       Phrases.(
@@ -133,38 +160,10 @@ let timeReadout = () => {
         )
       )
     );
+  let phrase = cleanup(timeText);
+  Js.log2(" clean timeText ", timeText);
 
   Js.log2(" timeText ", timeText);
-  // open Belt;
-  //   timeText->Array.keep(text => text == Option.isSome);
-};
-timeReadout();
-let timeReadout2 = {
-  // let readOutConfig = config;
-  let highlighted = getHighlights;
-  Js.log2("highlighted", highlighted);
-  Js.log2("phrases", Phrases.phrases);
 
-  let cleanup = arr => arr->Belt.Array.keepMap(x => x)->Js.Array.joinWith(" ", _);
-  let timeText =
-    Belt.(
-      Phrases.(
-        highlighted->Array.mapWithIndex((idx, h) =>
-          h ? phrases->Array.get(idx) : None
-        )
-      )
-    );
-let phrase = cleanup(timeText);
- Js.log2(" clean timeText ", timeText);
-// open Belt;
-// let sentences = timeText
-// ->Array.keepMap(Js.Nullable.toOption)
-// ->Js.Array.joinWith(" ", _);
-  Js.log2(" timeText ", timeText);
-
-  // open Belt;
-  //   timeText->Array.keep(text => text == Option.isSome);
-  (phrase, timeText,highlighted);
-};
-
-timeReadout2->Js.log;
+  (phrase, timeText, highlighted);
+} /* timeReadout2->Js.log*/;

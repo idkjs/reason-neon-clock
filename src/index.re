@@ -1,3 +1,3 @@
 // ReactDOMRe.renderToElementWithId(
 //   <NeonClock />, "root");
-ReactDOMRe.renderToElementWithId(<Clock />, "root");
+ReactDOMRe.renderToElementWithId(<NeonClock />, "root");

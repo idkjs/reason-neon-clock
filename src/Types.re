@@ -1,4 +1,5 @@
 type readOutConfig = {
+  itIs:bool,
   hour: int,
   isExact:bool,
   isAbout: bool,
