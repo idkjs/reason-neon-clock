@@ -1,4 +1,5 @@
 /** Identity function */
+[@bs.val] external requireCSS: string => unit = "require";
 let i = x => x;
 
 let none = f => {

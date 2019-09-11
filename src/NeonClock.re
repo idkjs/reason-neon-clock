@@ -1,26 +1,23 @@
 external castToUtterance: 'a => SpeechSynthesis.Utterance.t = "%identity";
+[@bs.val] external window: _ = "window";
+let isSpeech = Js.typeof(window) != "speechSynthesis";
+
 module Speaker = {
   [@react.component]
-  let make = (~active, ~text) => {
+  let make = (~active, ~text, ~isSpeech=isSpeech) => {
+    Js.log4("isSpeech", isSpeech, "active", active);
     React.useEffect1(
       () => {
-        if (active) {
-          Speech.speak(text, _
-            => ());
-            // SpeechSynthesis.speak(text);
+        switch (active, isSpeech) {
+        | (true, true) => Speech.speak(text, _ => ())
+        | (_, _) => ()
         };
+
         None;
       },
-      [|active|] // Here we are listing dependency on which component will be re-rendered.
+      [|active, isSpeech|] // Here we are listing dependency on which component will be re-rendered.
     );
     <div />;
-  };
-};
-
-module Button = {
-  [@react.component]
-  let make = (~label, ~onClick) => {
-    <button onClick> {label |> ReasonReact.string} </button>;
   };
 };
 
@@ -40,11 +37,11 @@ module TimeReadout = {
         Phrases.(
           highlighted->Array.mapWithIndex((idx, h) =>
             h
-              ? <span key=string_of_int(idx) className="glow">
+              ? <span key={string_of_int(idx)} className="glow">
                   {phrases->Array.get(idx)->Option.getWithDefault("")
                    |> React.string}
                 </span>
-              : <span key=string_of_int(idx)>
+              : <span key={string_of_int(idx)}>
                   {phrases->Array.get(idx)->Option.getWithDefault("")
                    |> React.string}
                 </span>
@@ -59,15 +56,55 @@ module TimeReadout = {
         label="Time now?"
         onClick={_event => Speech.speak(sentence, _ => ())}
       />
-      // <Button
-      //   label="SpeechSynthesis"
-      //   onClick={_event => SpeechSynthesis.speak(sentence->castToUtterance)}
-      // />
     </div>;
+
   };
+};
+
+let useClock = () => {
+  let (timer, setTimer) = React.useState(() => None);
+  let (time, setTime) = React.useState(() => Js.Date.now());
+  let timeLeft = () => {
+    let now = Js.Date.now();
+    let nextSec = (Js.Math.floor(now /. 1000.) + 1) * 1000;
+    let timeLeft = nextSec - now->int_of_float;
+    timeLeft->float_of_int;
+  };
+
+  React.useEffect1(
+    () => {
+      let timer =
+        switch (timer) {
+        | Some(timer) => timer
+        | None =>
+          let timer =
+            Js.Global.setInterval(() => setTime(_ => Js.Date.now()), 1000);
+          setTime(_ => timeLeft());
+          setTimer(_ => Some(timer));
+          timer;
+        };
+      Some(
+        () => {
+          Js.Global.clearInterval(timer);
+        },
+      );
+    },
+    [|timer|],
+  );
+  time;
 };
 
 [@react.component]
 let make = () => {
-  <div className="clock"> <StandardClock /> <TimeReadout /> </div>;
+  let time = useClock();
+  React.useEffect(() => {
+    Js.log2("Hey!", time);
+    None;
+  });
+  let time = Js.Float.toString(time);
+  <div className="clock">
+    <StandardClock />
+    <TimeReadout />
+    <p className="timer"> time->React.string </p>
+  </div>;
 };

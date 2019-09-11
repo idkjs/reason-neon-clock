@@ -8,3 +8,5 @@ npm-debug.log
 yarn-error.log
 .cache
 dist
+scratch
+src/clock.code-workspace

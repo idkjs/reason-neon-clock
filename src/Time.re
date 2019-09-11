@@ -1,9 +1,7 @@
-// module type Now = {let now: Js.Date.t;};
 
 module type Now = {let now: float;};
 
 module TimeConfig = (N: Now) => {
-  // module TimeConfig = (N: Now2) => {
   let now = N.now->Js.Date.fromFloat;
   let hour = Js.Date.getHours(now);
   let minute = now |> Js.Date.getMinutes;
