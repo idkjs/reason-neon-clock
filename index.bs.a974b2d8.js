@@ -112,4 +112,4 @@ var e=arguments[3];function r(){if("undefined"!=typeof globalThis)return globalT
 },{"react":"1n8/","reason-react/src/ReasonReactRouter.js":"B7Vg","../elements/Nav.bs.js":"4sew","../NeonClockV1.bs.js":"wDWx","../NeonClockV2.bs.js":"GD63"}],"dVjZ":[function(require,module,exports) {
 "use strict";var e=require("react"),r=require("reason-react/src/ReactDOMRe.js"),t=require("./App/App.bs.js");r.renderToElementWithId(e.createElement(t.make,{}),"root");
 },{"react":"1n8/","reason-react/src/ReactDOMRe.js":"VUZN","./App/App.bs.js":"SAKu"}]},{},["dVjZ"], null)
-//# sourceMappingURL=/index.bs.a974b2d8.js.map
+//# sourceMappingURL=/reason-neon-clock/index.bs.a974b2d8.js.map
