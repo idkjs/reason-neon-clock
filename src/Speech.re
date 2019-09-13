@@ -1,4 +1,7 @@
-/*** This causes the voices to load */
+/*** This causes the voices to load
+ *
+ * borrowed from https://github.com/jaredly/f3d/blob/master/src/FFI/SpeechSynthesis.re because I couldn't figure it out and was not the point of this excersize.
+ */
 let x = [%bs.raw {|(window.speechSynthesis && speechSynthesis.getVoices())|}];
 
 let speak: (string, unit => unit) => unit =

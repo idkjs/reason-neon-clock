@@ -15,13 +15,34 @@ body {
   font-family: "Julius Sans One";
   background: @dark-bg;
 }
+button {
+  max-width: 100vw;
+  font-family: "Julius Sans One";
+  background: @dark-bg;
+}
 
 #root {
   width: 100%;
   min-height: 100vh;
   .center-children();
 }
+nav {
+  display: flex;
+  color: @muted-red;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  word-spacing: 12px;
+  font-size: 36px;
+  line-height: 1.618;
 
+  &.glow {
+    color: @glowing-red;
+    text-shadow: 0 0 20px @shadow-red;
+    font-weight: bold;
+    filter: none;
+  }
+}
 .clock {
   width: 100%;
   max-width: 75vw;
@@ -39,6 +60,7 @@ body {
   font-size: 36px;
   line-height: 1.618;
 }
+
 
 .timer {
   margin-top: 30px;
@@ -61,6 +83,15 @@ span {
     font-weight: bold;
     filter: none;
   }
+}
+header {
+  color: @glowing-red;
+    text-shadow: 0 0 20px @shadow-red;
+    font-weight: bold;
+    filter: none;
+    display: flex;
+    .center-children();
+
 }
 
 .standard-clock {

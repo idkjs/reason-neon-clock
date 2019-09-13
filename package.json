@@ -1,12 +1,12 @@
 {
-  "name": "neon-clock-parcel",
+  "name": "reason-neon-clock",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "npm-run-all --parallel start serve",
-    "serve": "yarn parcel index.html",
     "start": "parcel src/index.html",
+    "serve": "parcel src/index.html",
     "prestart": "npm run clean:bs && npm run build:bs",
     "watch:bs": "bsb -make-world -w",
     "build": "parcel build src/index.html",
@@ -15,6 +15,8 @@
     "clean": "npm run clean:bs && npm run clean:dist",
     "clean:bs": "bsb -clean-world",
     "clean:dist": "rm -rf dist",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "test": "npm run build && jest"
   },
   "keywords": [],
@@ -28,8 +30,12 @@
     "parcel-bundler": "^1.12.3"
   },
   "dependencies": {
+    "@denommus/react-react": "1.0.2",
+    "@glennsl/bs-json": "5.0.1",
+    "gh-pages": "2.1.1",
     "react": "16.9.0",
     "react-dom": "16.9.0",
+    "react-frp": "git://github.com/Denommus/react.git#bucklescript-files",
     "reason-react": "0.7.0"
   }
 }

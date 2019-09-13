@@ -1,45 +1,27 @@
+/* Takes in the `time` prop and configures our `readOutConfig` so that the program know which words to use when it is speaking. The returned `config` object is passed to `getHighlights` which will tell us which phrases should be highlighted in the ui. The Ui highlights which phrases make up the current time. */
 
-module type Now = {let now: float;};
-
-module TimeConfig = (N: Now) => {
-  let now = N.now->Js.Date.fromFloat;
-  let hour = Js.Date.getHours(now);
-  let minute = now |> Js.Date.getMinutes;
-  let second = now |> Js.Date.getSeconds;
-  let display = now |> Js.Date.toLocaleString;
+type readOutConfig = {
+  itIs:bool,
+  hour: int,
+  isExact:bool,
+  isAbout: bool,
+  isAfternoon: bool,
+  isEvening: bool,
+  isMidnight: bool,
+  isMorning: bool,
+  isNearly: bool,
+  isNoon: bool,
+  isOClock: bool,
+  isPast: bool,
+  isTo: bool,
+  minute: int,
 };
+let getReadoutConfig = (~time) => {
+  let (_seconds, minutes, hours) = Utils.globalTime(~time);
 
-module GetNow =
-  TimeConfig({
-    let now = Js.Date.now();
-  });
-
-let hour = GetNow.hour;
-Js.log2(" hour ", hour);
-let minute = GetNow.minute;
-Js.log2(" minute ", minute);
-let second = GetNow.second;
-Js.log2(" second ", second);
-let display = GetNow.display;
-Js.log2(" display ", display);
-let getNow = () => {
-  let hour = GetNow.hour;
-  let minute = GetNow.minute;
-  let second = GetNow.second;
-  let display = GetNow.display;
-
-  (hour, minute, second, display);
-};
-let (hour, minute, second, display) = getNow();
-// let getReadoutConfig = (~hour, ~minute) => {
-let getReadoutConfig = () => {
   let itIs = true;
-  let hour = GetNow.hour;
-  let minute = GetNow.minute;
-  let lastMinuteMark = Js.Math.floor(minute /. 5.) * 5;
-  let hour = int_of_float(hour);
-  let minute = int_of_float(minute);
-  let distFromLast = minute - lastMinuteMark;
+  let lastMinuteMark = Js.Math.floor(minutes->float_of_int /. 5.) * 5;
+  let distFromLast = minutes - lastMinuteMark;
   let isExact = distFromLast === 0;
   let isNearly = !isExact && distFromLast > 2;
   let isAbout = !isExact && !isNearly;
@@ -48,14 +30,13 @@ let getReadoutConfig = () => {
   let isOClock = nearestMinuteMark === 0;
   let isPast = !isOClock && nearestMinuteMark <= 30;
   let isTo = !isOClock && !isPast;
-  // let minuteMark =
-  //   isPast || isOClock ? nearestMinuteMark : 60 - nearestMinuteMark;
+
   let minuteMark =
     switch (isPast, isOClock) {
     | (true, true) => nearestMinuteMark
     | (_, _) => 60 - nearestMinuteMark
     };
-  let nearestHour = isTo || isOClock && isNearly ? (hour + 1) mod 24 : hour;
+  let nearestHour = isTo || isOClock && isNearly ? (hours + 1) mod 24 : hours;
   let nearestHour12 = nearestHour > 12 ? nearestHour - 12 : nearestHour;
   let isNoon = nearestHour === 12;
   let isMidnight = nearestHour === 0;
@@ -70,7 +51,7 @@ let getReadoutConfig = () => {
   let minute = minuteMark;
   let isOClock = isIsOClock;
   let hour = nearestHour12;
-  let config: Types.readOutConfig = {
+  let config: readOutConfig = {
     itIs,
     isExact,
     isAbout,
@@ -88,11 +69,10 @@ let getReadoutConfig = () => {
   };
   config;
 };
-let config = getReadoutConfig();
 
 /* reads `config` and generates and array of values to be used. Feels redundant...
  */
-let getHighlights = [|
+let getHighlights = (~config: readOutConfig) => [|
   config.itIs, // IT IS
   config.isAbout, // ABOUT
   config.isNearly, // NEARLY
@@ -123,45 +103,19 @@ let getHighlights = [|
   config.isEvening // EVENING
 |];
 
-// Js.log2(" getHighlights ", getHighlights);
-
-// let timeReadout = () => {
-//   let highlighted = getHighlights;
-//   Js.log2("highlighted", highlighted);
-//   Js.log2("phrases", Phrases.phrases);
-
-//   let timeText =
-//     Belt.(
-//       Phrases.(
-//         highlighted->Array.mapWithIndex((idx, h) =>
-//           h ? phrases->Array.get(idx) : None
-//         )
-//       )
-//     );
-
-//   Js.log2(" timeText ", timeText);
-// };
-// timeReadout();
-let timeReadout = {
-  // let readOutConfig = config;
-  let highlighted = getHighlights;
-  Js.log2("highlighted", highlighted);
-  Js.log2("phrases", Phrases.phrases);
+let timeReadout = (~time)=>{
+  let config = getReadoutConfig(~time);
+  let highlighted =  getHighlights(~config);
 
   let cleanup = arr =>
     arr->Belt.Array.keepMap(x => x)->Js.Array.joinWith(" ", _);
   let timeText =
     Belt.(
-      Phrases.(
-        highlighted->Array.mapWithIndex((idx, h) =>
-          h ? phrases->Array.get(idx) : None
-        )
+      highlighted->Array.mapWithIndex((idx, h) =>
+        h ? Utils.phrases->Array.get(idx) : None
       )
     );
   let phrase = cleanup(timeText);
-  Js.log2(" clean timeText ", timeText);
-
-  Js.log2(" timeText ", timeText);
 
   (phrase, timeText, highlighted);
-} /* timeReadout2->Js.log*/;
+};
