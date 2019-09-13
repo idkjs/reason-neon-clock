@@ -7,6 +7,5 @@ npm-debug.log
 *.bs.js
 yarn-error.log
 .cache
-dist
 scratch
 src/clock.code-workspace
