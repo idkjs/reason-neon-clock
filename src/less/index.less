@@ -29,12 +29,11 @@ button {
 nav {
   display: flex;
   color: @muted-red;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   word-spacing: 12px;
   font-size: 36px;
   line-height: 1.618;
+  .center-children();
+
 
   &.glow {
     color: @glowing-red;

@@ -32725,11 +32725,11 @@ function Nav(Props) {
   }, React.createElement(Nav$Link, {
     href: "/v1",
     className: "glow",
-    children: React.createElement("h4", undefined, "ReactReact/ReactFRP")
-  }), React.createElement("div", undefined), React.createElement(Nav$Link, {
+    children: React.createElement("h4", undefined, "ReactReact/ReactFRP ")
+  }), React.createElement("div", undefined, "  |  "), React.createElement(Nav$Link, {
     href: "/v2",
     className: "glow",
-    children: React.createElement("h4", undefined, "ReasonHooks")
+    children: React.createElement("h4", undefined, " ReasonHooks")
   }));
 }
 
@@ -44284,6 +44284,7 @@ function App(Props) {
   var url = ReasonReactRouter.useUrl(undefined,
   /* () */
   0);
+  console.log("url", url);
   var match = url[
   /* path */
   0];
@@ -44318,7 +44319,11 @@ function App(Props) {
     nowShowing = React.createElement(NeonClockV1$ReasonNeonClock.make, {});
   }
 
-  return React.createElement("div", undefined, React.createElement(Nav$ReasonNeonClock.make, {}), nowShowing);
+  return React.createElement("div", {
+    className: "clock"
+  }, React.createElement("header", undefined, React.createElement("a", {
+    href: "https://github.com/idkjs/reason-neon-clock"
+  }, "github.com/idkjs/reason-neon-clock")), React.createElement(Nav$ReasonNeonClock.make, {}), nowShowing);
 }
 
 var make = App;
@@ -44364,7 +44369,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58873" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50485" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

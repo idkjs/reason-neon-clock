@@ -12,11 +12,11 @@ module Link = {
 let make = () => {
   <nav style={ReactDOMRe.Style.make(~display="flex", ())}>
     <Link className="glow" href="/v1">
-      <h4> "ReactReact/ReactFRP"->React.string </h4>
+      <h4> "ReactReact/ReactFRP "->React.string </h4>
     </Link>
-    <div />
+    <div> {" " ++ " | " ++ " " |> React.string} </div>
     <Link className="glow" href="/v2">
-      <h4> "ReasonHooks"->React.string </h4>
+      <h4> " ReasonHooks"->React.string </h4>
     </Link>
   </nav>;
 };

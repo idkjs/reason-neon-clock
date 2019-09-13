@@ -16,14 +16,13 @@ button {
   justify-content: center;
 }
 nav {
-  display: flex;
   color: #792d2d;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
   word-spacing: 12px;
   font-size: 36px;
   line-height: 1.618;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 nav.glow {
   color: #ffc5b2;

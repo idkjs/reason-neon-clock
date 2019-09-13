@@ -1,7 +1,7 @@
 [@react.component]
 let make = () => {
   let url = ReasonReactRouter.useUrl();
-
+  Js.log2("url", url);
   let nowShowing =
     switch (url.path) {
     | []
@@ -13,8 +13,7 @@ let make = () => {
     | _ => "NotFound"->React.string
     };
   ();
-  <div>
-    <Nav />
-    nowShowing
-  </div>;
+  <div className="clock">
+  <header><a href="https://github.com/idkjs/reason-neon-clock">"github.com/idkjs/reason-neon-clock"->React.string</a></header>
+   <Nav /> nowShowing </div>;
 };

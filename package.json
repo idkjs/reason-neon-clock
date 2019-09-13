@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm-run-all --parallel start serve",
+    "dev": "npm-run-all --parallel watch:bs serve",
     "start": "parcel src/index.html",
     "serve": "parcel src/index.html",
     "prestart": "npm run clean:bs && npm run build:bs",
