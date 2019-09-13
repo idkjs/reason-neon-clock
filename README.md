@@ -9,3 +9,5 @@ npm run watch:bs
 # in another terminal
 npm run serve
 ```
+
+See it at <https://idkjs.github.io/reason-neon-clock/>
