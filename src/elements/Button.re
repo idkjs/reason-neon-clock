@@ -2,7 +2,7 @@
 let make = (~label, ~onClick, ~className=?) => {
   <button ?className onClick>
     <span className="glow">
-      {"Click to here-> " ++ label |> ReasonReact.string}
+      {"Click to here-> " ++ label |> React.string}
     </span>
   </button>;
 };

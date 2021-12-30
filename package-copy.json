@@ -1,0 +1,42 @@
+{
+  "name": "reason-neon-clock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm run clean:res && rescript",
+    "start": "npm run pack && npm run dev",
+    "pack": "esbuild src/index.bs.js --bundle --outfile=src/index.js",
+    "dev": "npm-run-all --parallel watch:res serve",
+    "serve": "parcel serve src/index.html",
+    "build": "parcel build src/index.html",
+    "prebuild": "npm run clean && rescript",
+    "clean": "npm run clean:res && npm run clean:dist",
+    "clean:dist": "rm -rf dist",
+    "predeploy": "rm -rf dist && parcel build src/index.html --public-url /reason-neon-clock",
+    "deploy": "gh-pages -d dist",
+    "clean:res": "rescript clean -with-deps",
+    "watch:res": "rescript build -w",
+    "test": "npm run build && jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-less": "^2.0.1",
+    "esbuild": "^0.14.9",
+    "less": "4.1.2",
+    "npm-run-all": "4.1.5",
+    "parcel": "^2.0.1",
+    "rescript": "9.1.4"
+  },
+  "dependencies": {
+    "@denommus/react-react": "idkjs/react-react",
+    "@glennsl/bs-json": "5.0.4",
+    "@rescript/react": "0.10.3",
+    "gh-pages": "3.2.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-frp": "git://github.com/Denommus/react.git#bucklescript-files"
+  }
+}

@@ -31,17 +31,17 @@ let make = (~time) => {
      when logged in the console. Not being strong in `css` I didn't realize that the `css` is expecting a string which we would get from changing the result of our calculation from an `int` or `float` to a string then attaching the `deg` to the end. I learned this in the usual way, by reading someone else's code. In this case, @persianturtles code [here](https://github.com/persianturtle/reason-app-shell-starter-kit/blob/dc43c75671c1d6959533df94033f8e93319facf4/src/App.re#L384-L397). Thanks, [@RRafatpanah](https://mobile.twitter.com/RRafatpanah)!
      */
   let hourstyle =
-    ReactDOMRe.Style.make(
+    ReactDOM.Style.make(
       ~transform="rotate(" ++ Js.Float.toString(hourAngle) ++ "deg)",
       (),
     );
   let minutestyle =
-    ReactDOMRe.Style.make(
+    ReactDOM.Style.make(
       ~transform="rotate(" ++ Js.Float.toString(minuteAngle) ++ "deg)",
       (),
     );
   let secondstyle =
-    ReactDOMRe.Style.make(
+    ReactDOM.Style.make(
       ~transform="rotate(" ++ Js.Float.toString(secondAngle) ++ "deg)",
       (),
     );

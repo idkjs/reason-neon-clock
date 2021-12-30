@@ -11,13 +11,12 @@
     "error": "+5+8+11"
   },
   "bs-dependencies": [
-    "reason-react","react-frp","@denommus/react-react"
+    "@rescript/react","react-frp","@denommus/react-react"
   ],
   "bsc-flags": [
     "-bs-super-errors",
     "-bs-g"
   ],
-  "refmt": 3,
   "reason": {
     "react-jsx": 3
   },

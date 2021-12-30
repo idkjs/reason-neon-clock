@@ -1,0 +1,36 @@
+{
+  "name": "reason-neon-clock",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf .parcel-cache dist && npm run pack && parcel build src/index.html",
+    "build-dev": "rm -rf .parcel-cache dist && rescript build -w",
+    "res:clean": "rescript clean -with-deps",
+    "dev": "parcel serve src/index.html",
+    "pack": "esbuild src/index.bs.js --bundle --outfile=src/index.js",
+    "start": "npm run build-dev && npm run pack && npm run dev",
+    "deploy": "gh-pages -d dist",
+    "clean:res": "rescript clean -with-deps",
+    "watch:res": "rescript build -w"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@parcel/transformer-less": "^2.0.1",
+    "esbuild": "^0.14.9",
+    "less": "4.1.2",
+    "npm-run-all": "4.1.5",
+    "parcel": "^2.0.1",
+    "rescript": "9.1.4"
+  },
+  "dependencies": {
+    "@denommus/react-react": "idkjs/react-react",
+    "@rescript/react": "0.10.3",
+    "gh-pages": "3.2.3",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-frp": "git://github.com/Denommus/react.git#bucklescript-files"
+  }
+}
